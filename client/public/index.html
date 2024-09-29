@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Space Apps Challenge</title>
+    <link rel="stylesheet" href="/client/src/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="hero">
+        <div class="navbar">
+            <h2 class="logo">LOGO</h2>
+        </div>
+        <div class="hero-content">
+            <p class="tagline">Join the NASA Space Apps Challenge</p>
+            <h1>Explore <span class="highlight">Space</span></h1>
+            <p class="description">Discover the objects orbiting Earth and beyond in real-time.</p>
+            <button class="explore-btn">Start Exploring</button>
+        </div>
+
+        <!-- El astronauta o fondo animado -->
+        <div class="astronaut">
+            <img src="/client/src/assets/astronauta-img.svg" alt="Astronaut">
+        </div>
+
+        <!-- Fondo animado con estrellas -->
+        <div class="stars"></div>
+    </div>
+
+    <!-- Nueva sección para el planeta 3D -->
+    <div class="planet-section" id="planet-section">
+        <h2>3D Planet View</h2>
+        <div id="planet-container"></div>
+    </div>
+
+    <!-- GSAP para animaciones -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <!-- Incluir Three.js desde el CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="/client/src/app.js"></script>
+</body>
+
+</html>

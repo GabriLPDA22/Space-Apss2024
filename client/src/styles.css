@@ -1,0 +1,223 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body,
+html {
+    height: 100%;
+    overflow-x: hidden;
+    background: #000;
+    /* Fondo negro para el espacio */
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: 50px;
+
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 50px;
+}
+
+.navbar ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.navbar ul li {
+    margin-left: 30px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    color: #00bcd4;
+}
+
+/* Hero Content */
+.hero-content {
+    right: 10%;
+    z-index: 2;
+    position: relative;
+}
+
+.tagline {
+    font-size: 2rem;
+    /* Incrementado */
+    margin-bottom: 20px;
+    color: #b8b8b8;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+h1 {
+    font-size: 6rem;
+    /* Incrementado para que el título sea más grande */
+    margin: 20px 0;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.highlight {
+    color: #00bcd4;
+}
+
+.description {
+    font-size: 1.5rem;
+    /* Incrementado */
+    margin-bottom: 30px;
+    color: #dcdcdc;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.explore-btn {
+    padding: 15px 30px;
+    /* Tamaño del botón aumentado */
+    font-size: 1.5rem;
+    /* Tamaño del texto del botón aumentado */
+    background-color: #00bcd4;
+    border: none;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: background-color 0.3s ease;
+}
+
+.explore-btn:hover {
+    background-color: #008c9e;
+}
+
+/* Astronaut image */
+.astronaut img {
+    width: 600px;
+    /* Aumentamos el tamaño del astronauta */
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    z-index: 1;
+    transform: scale(0);
+    /* Estado inicial para animación */
+}
+
+.stars {
+    background: url('/client/src/assets/banner-bg.png') no-repeat center bottom;
+    background-size: cover;
+    /* Hace que el fondo ocupe el 100% */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+
+/* Nueva sección del planeta */
+.planet-section {
+    height: 100vh;
+    display: none;
+    /* Ocultar hasta que se haga el zoom */
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    position: relative;
+}
+
+#planet-container {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+
+/* Animación para mover las estrellas */
+@keyframes moveStars {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 10000px 10000px;
+    }
+}
+
+
+
+
+
+/*PLANETA 3D*/
+
+
+/* Ajustes para el zoom en el fondo */
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    text-align: center;
+    color: white;
+    padding: 50px;
+    background: black;
+    /* Asegurar un fondo negro para la transición */
+    transition: opacity 1s ease;
+}
+
+.planet-section {
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    position: relative;
+}
+
+#planet-container {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+
+.planet-section {
+    height: 100vh;
+    display: none;
+    /* Oculto inicialmente */
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+#planet-container {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,14 @@
+{
+    "name": "space_apps",
+    "version": "1.0.0",
+    "description": "Project for NASA Space Apps hackathon",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "Tu nombre",
+    "license": "ISC",
+    "dependencies": {
+        "three": "^0.128.0"
+    }
+}
