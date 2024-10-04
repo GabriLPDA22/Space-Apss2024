@@ -34,7 +34,9 @@ html {
     align-items: center;
     width: 100%;
     padding: 10px 50px;
+    z-index: 1;
 }
+
 
 .navbar ul {
     display: flex;

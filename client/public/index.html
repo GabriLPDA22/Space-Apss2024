@@ -7,12 +7,14 @@
     <title>NASA Space Apps Challenge</title>
     <link rel="stylesheet" href="/client/src/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Incluir el CSS de Cesium -->
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.93/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="hero">
         <div class="navbar">
-            <h2 class="logo">LOGO</h2>
+            <img src="../src/assets/NASA_logo.svg" alt="logo">
         </div>
         <div class="hero-content">
             <p class="tagline">Join the NASA Space Apps Challenge</p>
@@ -30,16 +32,12 @@
         <div class="stars"></div>
     </div>
 
-    <!-- Nueva sección para el planeta 3D -->
-    <div class="planet-section" id="planet-section">
-        <h2>3D Planet View</h2>
-        <div id="planet-container"></div>
-    </div>
-
     <!-- GSAP para animaciones -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
     <!-- Incluir Three.js desde el CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Incluir Cesium.js desde el CDN -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.93/Build/Cesium/Cesium.js"></script>
     <script src="/client/src/app.js"></script>
 </body>
 
