@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Eventos Naturales - EONET</title>
+    <!-- CesiumJS CSS -->
+    <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Widgets/widgets.css" />
+
+    <link rel="stylesheet" href="../src/visualizador.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>NASA SPACE DEBRIS TRACKER</h1>
+        </div>
+        <div>
+            <img src="../src/assets/NASA_logo.svg" alt="logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="events">
+            <!-- Contenedor del mapa 3D -->
+            <div id="cesiumContainer"></div>
+        </div>
+        <div class="about">
+            <h2>ABOUT THIS WEB</h2>
+            <p>This platform is designed to help users monitor and understand space debris with
+                data provided by NASA.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p class="marcafin">&copy; 2024 NASA SPACE DEBRIS TRACKER. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- CesiumJS JS -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.92/Build/Cesium/Cesium.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ZjQ4NTM2Ny02MjUyLTQ2OWEtOWI0Zi0wMzEzMjFmZDhhNTUiLCJpZCI6MjQ0OTM0LCJpYXQiOjE3Mjc2MTk3Nzl9.JCgYGEruFIaJKAnDe8EC4AvkAgZ2WGPiHVH-Dmm_4G8';
+
+        // Inicializar CesiumJS en el contenedor 'cesiumContainer'
+        const viewer = new Cesium.Viewer('cesiumContainer', {
+            baseLayerPicker: true,  // Selector de capas
+            geocoder: false,         // Geocoder
+            homeButton: true,
+            sceneModePicker: false,
+            timeline: false,
+            animation: false,
+            fullscreenButton: false,
+        });
+    </script>
+
+</body>
+
+</html>
