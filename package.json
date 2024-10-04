@@ -9,6 +9,7 @@
     "author": "Tu nombre",
     "license": "ISC",
     "dependencies": {
+        "satellite.js": "^5.0.0",
         "three": "^0.128.0"
     }
 }
