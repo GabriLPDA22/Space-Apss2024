@@ -43,10 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (heroSection) { // Verificamos que el .hero existe
           heroSection.style.display = 'none'; // Ocultar la sección hero
         }
-
-        // Mostrar la sección del planeta 3D
-        document.querySelector('.planet-section').style.display = 'flex'; // Mostrar la sección del planeta
-        animatePlanet(); // Iniciar la animación del planeta 3D
       }
     });
 
@@ -59,98 +55,105 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Función para iniciar la animación del planeta 3D
-function animatePlanet() {
-  // Crear la escena, cámara y renderizador
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({
-    antialias: true
+// Esperar a que el documento esté completamente cargado
+window.addEventListener("load", () => {
+    // Establecer el token de acceso de Cesium ion
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ZjQ4NTM2Ny02MjUyLTQ2OWEtOWI0Zi0wMzEzMjFmZDhhNTUiLCJpZCI6MjQ0OTM0LCJpYXQiOjE3Mjc2MTk3Nzl9.JCgYGEruFIaJKAnDe8EC4AvkAgZ2WGPiHVH-Dmm_4G8';
+  
+    // Inicializar el visor de Cesium con capas base personalizadas
+    const viewer = new Cesium.Viewer("cesiumContainer", {
+      imageryProvider: new Cesium.IonImageryProvider({ assetId: 2 }), // Bing Maps Aerial
+      terrainProvider: new Cesium.CesiumTerrainProvider({
+        url: Cesium.IonResource.fromAssetId(1), // Cesium World Terrain
+      }),
+      animation: false,
+      timeline: false,
+      selectionIndicator: false,
+      infoBox: false,
+      baseLayerPicker: false,
+      geocoder: false,
+      homeButton: false,
+      navigationHelpButton: false,
+      sceneModePicker: false,
+    });
+  
+    // Añadir iluminación a la Tierra
+    viewer.scene.globe.enableLighting = true;
+  
+    // Variable para la puntuación
+    let puntuacion = 0;
+    const scoreElement = document.getElementById("score");
+  
+    // Función para actualizar la puntuación en la interfaz
+    function actualizarPuntuacion(puntos) {
+      puntuacion += puntos;
+      scoreElement.textContent = puntuacion;
+    }
+  
+    // Función para agregar objetos orbitales
+    function agregarObjeto(nombre, posicion, color, puntos) {
+      return viewer.entities.add({
+        name: nombre,
+        position: posicion,
+        ellipsoid: {
+          radii: new Cesium.Cartesian3(50000.0, 50000.0, 50000.0),
+          material: color,
+        },
+        puntos: puntos,
+      });
+    }
+  
+    // Lista de objetos con sus propiedades
+    const objetos = [
+      { nombre: "Satélite Funcional", color: Cesium.Color.GREEN, puntos: 10 },
+      { nombre: "Basura Espacial", color: Cesium.Color.RED, puntos: -5 },
+      { nombre: "Asteroide Peligroso", color: Cesium.Color.YELLOW, puntos: -15 },
+      { nombre: "Cometa", color: Cesium.Color.BLUE, puntos: 20 },
+    ];
+  
+    // Función para generar posiciones aleatorias en órbita
+    function generarPosicionAleatoria() {
+      const longitud = Math.random() * 360 - 180;
+      const latitud = Math.random() * 180 - 90;
+      const altura = 2000000 + Math.random() * 1000000; // Entre 2000 km y 3000 km
+      return Cesium.Cartesian3.fromDegrees(longitud, latitud, altura);
+    }
+  
+    // Agregar objetos al azar
+    for (let i = 0; i < 100; i++) {
+      const objeto = objetos[Math.floor(Math.random() * objetos.length)];
+      const posicion = generarPosicionAleatoria();
+      agregarObjeto(objeto.nombre, posicion, objeto.color, objeto.puntos);
+    }
+  
+    // Manejar clics en los objetos
+    const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    handler.setInputAction((click) => {
+      const pickedObject = viewer.scene.pick(click.position);
+      if (
+        Cesium.defined(pickedObject) &&
+        Cesium.defined(pickedObject.id) &&
+        Cesium.defined(pickedObject.id.puntos)
+      ) {
+        const puntos = pickedObject.id.puntos;
+        actualizarPuntuacion(puntos);
+  
+        // Eliminar el objeto después de hacer clic
+        viewer.entities.remove(pickedObject.id);
+  
+        // Efecto visual al hacer clic (por ejemplo, destello)
+        const efecto = viewer.entities.add({
+          position: pickedObject.id.position.getValue(Cesium.JulianDate.now()),
+          point: {
+            pixelSize: 10,
+            color: Cesium.Color.WHITE,
+          },
+        });
+  
+        setTimeout(() => {
+          viewer.entities.remove(efecto);
+        }, 500);
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('planet-container').appendChild(renderer.domElement);
-
-  // Luz direccional
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  directionalLight.position.set(5, 3, 5);
-  scene.add(directionalLight);
-
-  // Luz ambiental
-  const ambientLight = new THREE.AmbientLight(0x404040); // Luz ambiental suave
-  scene.add(ambientLight);
-
-  // Cargar las texturas
-  const textureLoader = new THREE.TextureLoader();
-  const earthTexture = textureLoader.load('/client/src/assets/textures/00_earthmap1k.jpg');
-  const specularTexture = textureLoader.load('/client/src/assets/textures/02_earthspec1k.jpg');
-  const cloudTexture = textureLoader.load('/client/src/assets/textures/04_earthcloudmap.jpg');
-  const cloudTransparency = textureLoader.load('/client/src/assets/textures/05_earthcloudmapTrans.jpg');
-
-  // Crear la esfera (Tierra)
-  const earthGeometry = new THREE.SphereGeometry(5, 64, 64);
-  const earthMaterial = new THREE.MeshPhongMaterial({
-    map: earthTexture, // Textura de la Tierra
-    specularMap: specularTexture, // Mapa especular
-    specular: new THREE.Color(0x444444), // Especular
-    shininess: 15 // Brillo especular
-  });
-  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  scene.add(earth);
-
-  // Añadir nubes (otra esfera)
-  const cloudGeometry = new THREE.SphereGeometry(5.1, 64, 64); // Ligeramente más grande que la Tierra
-  const cloudMaterial = new THREE.MeshPhongMaterial({
-    map: cloudTexture,
-    alphaMap: cloudTransparency,
-    transparent: true,
-    opacity: 0.8
-  });
-  const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-  scene.add(clouds);
-
-  // Posición inicial de la cámara
-  camera.position.z = 15;
-
-  // Crear las estrellas
-  const starGeometry = new THREE.BufferGeometry();
-  const starMaterial = new THREE.PointsMaterial({
-    color: 0xffffff
-  });
-
-  // Generar 1000 estrellas
-  const starVertices = [];
-  for (let i = 0; i < 1000; i++) {
-    const x = (Math.random() - 0.5) * 2000;
-    const y = (Math.random() - 0.5) * 2000;
-    const z = -Math.random() * 2000; // Distribuye las estrellas hacia el fondo
-    starVertices.push(x, y, z);
-  }
-
-  // Añadir las posiciones de las estrellas a la geometría
-  starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-
-  // Crear el objeto de estrellas y añadirlo a la escena
-  const stars = new THREE.Points(starGeometry, starMaterial);
-  scene.add(stars);
-
-  // Animación
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotación de la Tierra y las nubes
-    earth.rotation.y += 0.002;
-    clouds.rotation.y += 0.001;
-
-    // Renderizar la escena
-    renderer.render(scene, camera);
-  }
-
-  // Responder a redimensionamiento de ventana
-  window.addEventListener('resize', function () {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-  });
-
-  animate();
-}
+  
