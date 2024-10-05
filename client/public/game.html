@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Juego Espacial para Niños</title>
+    <link rel="stylesheet" href="/client/src/game.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="puntuacion">Puntuación: <span id="score">0</span></div>
+    <div id="record-container">Récord: <span id="record-score">0</span></div>
+    <div id="temporizador">Tiempo restante: <span id="time">05:00</span></div>
+    <div id="cesiumContainer"></div>
+
+    <!-- Incluye CesiumJS -->
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.93/Build/Cesium/Cesium.js"></script>
+    <link href="https://cesium.com/downloads/cesiumjs/releases/1.93/Build/Cesium/Widgets/widgets.css"
+        rel="stylesheet" />
+
+    <!-- Modal de Quiz -->
+    <div id="modal-quiz" class="modal">
+        <div class="modal-contenido">
+            <span id="modal-quiz-cerrar" class="modal-cerrar">&times;</span>
+            <h2 id="modal-quiz-titulo"></h2>
+            <p id="modal-quiz-pregunta"></p>
+            <div id="quiz-opciones">
+                <button class="quiz-opcion"></button>
+                <button class="quiz-opcion"></button>
+                <button class="quiz-opcion"></button>
+                <button class="quiz-opcion"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Mensajes Generales -->
+    <div id="modal-mensaje" class="modal">
+        <div class="modal-contenido">
+            <span id="modal-mensaje-cerrar" class="modal-cerrar">&times;</span>
+            <h2 id="modal-mensaje-titulo"></h2>
+            <p id="modal-mensaje-contenido"></p>
+            <button id="modal-reiniciar" style="display: none;">Reiniciar Juego</button>
+        </div>
+    </div>
+
+    <!-- Tu script principal -->
+    <script src="/client/src/game.js"></script>
+</body>
+
+</html>
